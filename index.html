@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GOMEZA SOLUTIONS</title>
-
 <style>
 *{
 margin:0;
@@ -95,67 +94,74 @@ color:#888;
 }
 </style>
 </head>
-
 <body>
 
 <header>
 <img src="logo.png" alt="GOMEZA SOLUTIONS" width="180">
 <h1>GOMEZA SOLUTIONS</h1>
 <p>Automatización y soluciones digitales para ingeniería</p>
-
-<a class="btn" href="https://wa.me/51917810116">
-Solicitar Información
-</a>
+<a class="btn" href="https://wa.me/51917810116">Solicitar Información</a>
 </header>
 
 <section>
 <h2>Servicios</h2>
-
-<div class="cards">
-
-<div class="card">
-<h3>Plantillas de Metrados</h3>
-<p>Plantillas profesionales para acelerar el desarrollo de metrados en proyectos de construcción.</p>
-<p style="color:#D4AF37; font-size:1.4rem; margin-top:15px;"><strong>S/ 79</strong></p>
-</div>
-
-<div class="card">
-<h3>Presupuestos y APU</h3>
-<p>Formatos optimizados para presupuestos, análisis de precios unitarios y control de costos.</p>
-<p style="color:#D4AF37; font-size:1.4rem; margin-top:15px;"><strong>S/ 89</strong></p>
-</div>
-
-<div class="card">
-<h3>Google Apps Script</h3>
-<p>Sistemas web personalizados conectados con Google Sheets para automatizar procesos.</p>
-<p style="color:#D4AF37; font-size:1.4rem; margin-top:15px;"><strong>Desde S/ 300</strong></p>
-</div>
-
-<div class="card">
-<h3>Automatización</h3>
-<p>Digitalización de procesos de ingeniería mediante hojas de cálculo inteligentes y aplicaciones web.</p>
-<p style="color:#D4AF37; font-size:1.4rem; margin-top:15px;"><strong>Desde S/ 150</strong></p>
-</div>
-
+<div class="cards" id="productos-container">
+    <div class="card">Cargando productos desde Google Sheets...</div>
 </div>
 </section>
 
 <section class="contacto">
 <h2>Contacto</h2>
-
 <p>WhatsApp: 917810116</p>
-
 <br>
-
-<a class="btn" href="https://wa.me/51917810116">
-Escribir por WhatsApp
-</a>
-
+<a class="btn" href="https://wa.me/51917810116">Escribir por WhatsApp</a>
 </section>
 
-<footer>
-© 2025 Gomeza Solutions
-</footer>
+<footer>© 2025 GOMEZA SOLUTIONS</footer>
 
+<script>
+// IMPORTANTE: Reemplaza esta URL con tu enlace CSV de Google Sheets
+const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTlklYGoOZfkwudNSRmLsSSrSA97CLvvHOLOS9gY7_omdTM7KxMhBREZiryNxHoTtqVogQTg2GGucG_/pub?output=csv";
+
+async function cargarProductos() {
+    try {
+        const respuesta = await fetch(CSV_URL);
+        const textoCSV = await respuesta.text();
+        
+        // Convertir CSV a array de objetos
+        const lineas = textoCSV.trim().split("\n");
+        const encabezados = lineas[0].split(",");
+        const productos = [];
+        
+        for (let i = 1; i < lineas.length; i++) {
+            const valores = lineas[i].split(",");
+            let producto = {};
+            for (let j = 0; j < encabezados.length; j++) {
+                producto[encabezados[j]] = valores[j] ? valores[j].replace(/^"|"$/g, '') : "";
+            }
+            productos.push(producto);
+        }
+        
+        // Generar HTML de tarjetas
+        let html = "";
+        for (let p of productos) {
+            let ofertaTexto = p.oferta ? `<p style="color:#FF8888; margin-top:10px;">🔥 ${p.oferta}</p>` : "";
+            html += `
+            <div class="card">
+                <h3>${p.producto}</h3>
+                <p>${p.descripcion}</p>
+                <p style="color:#D4AF37; font-size:1.4rem; margin-top:15px;"><strong>${p.precio}</strong></p>
+                ${ofertaTexto}
+            </div>`;
+        }
+        document.getElementById("productos-container").innerHTML = html;
+    } catch (error) {
+        console.error("Error al cargar productos:", error);
+        document.getElementById("productos-container").innerHTML = '<div class="card">Error al cargar productos. Por favor recarga la página.</div>';
+    }
+}
+
+cargarProductos();
+</script>
 </body>
 </html>

@@ -9,6 +9,7 @@
         :root {
             --color-petroleo: #1a4747;
             --color-turquesa: #2c9fa8;
+            --color-whatsapp: #25d366; /* Color oficial de WhatsApp */
             --color-blanco: #ffffff;
             --color-fondo: #f4f7f6;
         }
@@ -16,6 +17,20 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: var(--color-fondo); color: #333; line-height: 1.6; }
         html { scroll-behavior: smooth; }
+
+        /* === ESTILO DEL BOTÓN DE WHATSAPP === */
+        .btn-whatsapp {
+            display: inline-block;
+            background-color: var(--color-whatsapp);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: transform 0.3s ease;
+        }
+        .btn-whatsapp:hover { transform: scale(1.05); background-color: #128c7e; }
 
         /* === MENÚ DE NAVEGACIÓN === */
         header { background-color: var(--color-petroleo); position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
@@ -78,6 +93,8 @@
         <img src="logo.png" alt="Logo GOMEZA">
         <h1>SOLUCIONES EN INGENIERÍA Y CONSTRUCCIÓN</h1>
         <p>Especialistas en metrados, presupuestos y desarrollo de herramientas profesionales.</p>
+        <br>
+        <a href="https://wa.me/qr/EUBYQYZDTMUSA1" class="btn-whatsapp" target="_blank">Escríbenos al WhatsApp</a>
     </section>
 
     <section id="servicios" class="section-container">
@@ -102,6 +119,7 @@
     <footer id="contacto">
         <h2>GOMEZA Solutions</h2>
         <p>Ingeniería, Construcción y Tecnología aplicada.</p>
+        <a href="https://wa.me/qr/EUBYQYZDTMUSA1" class="btn-whatsapp" target="_blank" style="margin-top: 20px;">Contactar por WhatsApp</a>
     </footer>
 
 </body>
